@@ -1,9 +1,10 @@
 import prisma from "@/lib/prisma"
 
 export const getTickets = async () => {
-   return await prisma.ticket.findMany({
+   const tickets = await prisma.ticket.findMany({
     orderBy: {
         createdAt: "desc"
     }
    })
+   return tickets || null
 }
