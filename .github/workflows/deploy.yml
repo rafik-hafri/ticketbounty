@@ -24,6 +24,8 @@ jobs:
 
       - name: Build Docker Image
         run: |
+          # Navigate explicitly to the project directory if necessary
+          cd $GITHUB_WORKSPACE  # Ensure we're in the right directory
           docker-compose -f docker-compose.yml build
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -38,5 +40,5 @@ jobs:
             export DATABASE_URL=${{ secrets.DATABASE_URL }} 
             cd /home/rafik/ticketbounty  
             git pull origin main  
-            docker-compose down  
+            docker-compose down  #
             docker-compose up -d --build
