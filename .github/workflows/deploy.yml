@@ -28,18 +28,23 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-      - name: Set up SSH keys
-        uses: appleboy/ssh-action@v0.1.1
-        with:
-          host: ${{ secrets.VPS_IP }}
-          username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_PRIVATE_KEY }} # This is the correct input name for the private key
-          known_hosts: ${{ secrets.VPS_KNOWN_HOSTS }} # This is the correct input name for the known hosts
-          port: 2222
-          script: |
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.VPS_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy to VPS
+        run: |
+          ssh -i ~/.ssh/id_rsa -p 2222 ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} << 'EOF'
             export DATABASE_URL=${{ secrets.DATABASE_URL }}
             cd /home/rafik/ticketbounty
             git pull origin main
             docker-compose down
             docker-compose up -d --build
-          debug: true
+          EOF
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        debug: true
