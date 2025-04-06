@@ -1,4 +1,4 @@
-name: Deploy Next.js App with Docker
+name: Deploy Ticketbounty App
 
 on:
   push:
