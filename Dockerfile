@@ -8,7 +8,7 @@ RUN npm install -g npm@latest && npm install --legacy-peer-deps
 
 COPY . .
 
-COPY prisma ./prisma
+COPY prisma /app/prisma
 
 RUN npm run build
 
