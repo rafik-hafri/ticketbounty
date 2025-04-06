@@ -28,18 +28,13 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-      - name: Add SSH key and known hosts
-        uses: shimataro/ssh-key-action@v1
-        with:
-          private-key: ${{ secrets.VPS_PRIVATE_KEY }}
-          known-hosts: ${{ secrets.VPS_KNOWN_HOSTS }}
-
-      - name: Deploy via SSH
+      - name: Set up SSH keys
         uses: appleboy/ssh-action@v0.1.1
         with:
           host: ${{ secrets.VPS_IP }}
           username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_PRIVATE_KEY }}
+          private-key: ${{ secrets.VPS_PRIVATE_KEY }}
+          known-hosts: ${{ secrets.VPS_KNOWN_HOSTS }}
           port: 2222
           script: |
             export DATABASE_URL=${{ secrets.DATABASE_URL }}
@@ -47,3 +42,4 @@ jobs:
             git pull origin main
             docker-compose down
             docker-compose up -d --build
+          debug: true
