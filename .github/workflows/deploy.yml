@@ -1,4 +1,4 @@
-name: Deploy Next.js App with Docker
+name: Deploy Ticketbounty App
 
 on:
   push:
@@ -29,18 +29,23 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-      - name: Deploy to VPS
+      - name: Setup SSH Key
         uses: shimataro/ssh-key-action@v1
+        with:
+          private-key: ${{ secrets.VPS_PRIVATE_KEY }}
+          known-hosts: ${{ secrets.VPS_KNOWN_HOSTS }}
+
+      - name: SSH and Deploy
+        uses: appleboy/ssh-action@v0.1.1
         with:
           host: ${{ secrets.VPS_IP }}
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_PRIVATE_KEY }}
-          known_hosts: ${{ secrets.VPS_KNOWN_HOSTS }}
           port: 2222
           script: |
-            export DATABASE_URL=${{ secrets.DATABASE_URL }} 
-            cd /home/rafik/ticketbounty  
-            git pull origin main  
-            docker-compose down  
+            export DATABASE_URL=${{ secrets.DATABASE_URL }}
+            cd /home/rafik/ticketbounty
+            git pull origin main
+            docker-compose down
             docker-compose up -d --build
           debug: true
