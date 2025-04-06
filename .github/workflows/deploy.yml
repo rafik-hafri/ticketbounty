@@ -30,6 +30,11 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
+      - name: Check SSH Key
+        run: |
+          # Test SSH authentication by attempting to connect to the VPS
+          ssh -i ~/.ssh/id_rsa -p 2222 ${VPS_USERNAME}@${{ secrets.VPS_IP }} "echo SSH Key Authentication Works!"
+
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v0.1.1
         with:
