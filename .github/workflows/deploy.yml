@@ -1,4 +1,4 @@
-name: Deploy Ticketbounty App
+name: Deploy Next.js App with Docker
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,32 +20,26 @@ jobs:
         run: |
           sudo curl -L "https://github.com/docker/compose/releases/download/v2.19.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
-          docker-compose --version  # Verify installation
+          docker-compose --version
 
       - name: Build Docker Image
         run: |
-          cd $GITHUB_WORKSPACE 
           docker-compose -f docker-compose.yml build
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-      - name: Setup SSH Key
+      - name: Add SSH key
         uses: shimataro/ssh-key-action@v1
         with:
           private-key: ${{ secrets.VPS_PRIVATE_KEY }}
           known-hosts: ${{ secrets.VPS_KNOWN_HOSTS }}
 
-      - name: SSH and Deploy
-        uses: appleboy/ssh-action@v0.1.1
-        with:
-          host: ${{ secrets.VPS_IP }}
-          username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_PRIVATE_KEY }}
-          port: 2222
-          script: |
+      - name: Deploy via SSH
+        run: |
+          ssh -p 2222 ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} << 'EOF'
             export DATABASE_URL=${{ secrets.DATABASE_URL }}
             cd /home/rafik/ticketbounty
             git pull origin main
             docker-compose down
             docker-compose up -d --build
-          debug: true
+          EOF
