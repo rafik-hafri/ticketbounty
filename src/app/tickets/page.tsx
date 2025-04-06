@@ -6,7 +6,8 @@ import Heading from "@/components/heading"
 import Spinner from "@/components/spinner"
 import TicketList from "@/features/ticket/components/ticket-list"
 import TicketUpsertForm from "@/features/ticket/components/ticket-upsert"
-//  export const dynamic = "force-dynamic" turning static pages to dynamic to prevent cashing
+
+export const dynamic = "force-dynamic" 
 // const revalidate = 30 re-validate data all 30s
  function TicketsPage() {
 
