@@ -8,8 +8,6 @@ RUN npm install -g npm@latest && npm install --legacy-peer-deps
 
 COPY . .
 
-COPY prisma /app/prisma
-
 RUN npm run build
 
 FROM node:22-alpine AS runner
