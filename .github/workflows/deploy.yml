@@ -30,11 +30,12 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Deploy to VPS
-        uses: appleboy/ssh-action@v0.1.1
+        uses: shimataro/ssh-action@v0.1.1
         with:
           host: ${{ secrets.VPS_IP }}
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.VPS_KNOWN_HOSTS }}
           port: 2222
           script: |
             export DATABASE_URL=${{ secrets.DATABASE_URL }} 
