@@ -33,8 +33,8 @@ jobs:
         with:
           host: ${{ secrets.VPS_IP }}
           username: ${{ secrets.VPS_USERNAME }}
-          private-key: ${{ secrets.VPS_PRIVATE_KEY }}
-          known-hosts: ${{ secrets.VPS_KNOWN_HOSTS }}
+          key: ${{ secrets.VPS_PRIVATE_KEY }} # This is the correct input name for the private key
+          known_hosts: ${{ secrets.VPS_KNOWN_HOSTS }} # This is the correct input name for the known hosts
           port: 2222
           script: |
             export DATABASE_URL=${{ secrets.DATABASE_URL }}
