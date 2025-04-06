@@ -22,9 +22,11 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose --version  # Verify installation
 
-      - name: Build and Push Docker Image
+      - name: Build Docker Image
         run: |
           docker-compose -f docker-compose.yml build
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v0.1.1
@@ -33,7 +35,7 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_PRIVATE_KEY }}
           script: |
-            export DATABASE_URL=${{ secrets.DATABASE_URL }}
+            export DATABASE_URL=${{ secrets.DATABASE_URL }} 
             cd /home/rafik/ticketbounty  
             git pull origin main  
             docker-compose down  
