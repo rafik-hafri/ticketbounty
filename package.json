@@ -11,7 +11,7 @@
     "type": "tsc --noEmit",
     "tailwind:init": "tailwindcss init --ts",
     "postinstall": "prisma generate",
-    "prisma-seed": "tsx prisma/seed.ts",
+    "prisma-seed": "tsx prisma/seed.ts"
     
   },
   "dependencies": {
