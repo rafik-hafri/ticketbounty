@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package.json package-lock.json* pnpm-lock.yaml* ./
 
-RUN npm install -g npm@latest && npm install
+RUN npm install -g npm@latest && npm install --legacy-peer-deps
 
 COPY . .
 
