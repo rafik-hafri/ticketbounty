@@ -2,11 +2,9 @@ FROM node:22-alpine AS base
 
 WORKDIR /app
 
-COPY package.json package-lock.json* pnpm-lock.yaml* ./
+COPY . .
 
 RUN npm install -g npm@latest && npm install --legacy-peer-deps
-
-COPY . .
 
 RUN npm run postinstall
 
