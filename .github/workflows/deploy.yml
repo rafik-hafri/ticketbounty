@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v2
 
       - name: Install Docker Compose
         run: |
@@ -36,15 +36,19 @@ jobs:
           echo "${{ secrets.VPS_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
-      - name: Deploy to VPS
-        run: |
-          ssh -i ~/.ssh/id_rsa -p 2222 ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} << 'EOF'
+      - name: Deploy to VPS using SSH
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.VPS_IP }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_PRIVATE_KEY }}
+          port: 2222
+          script: |
             export DATABASE_URL=${{ secrets.DATABASE_URL }}
             cd /home/rafik/ticketbounty
             git pull origin main
             docker-compose down
             docker-compose up -d --build
-          EOF
+          debug: true
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        debug: true
