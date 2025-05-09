@@ -1,10 +1,6 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        DATABASE_URL: ${DATABASE_URL}
+    image: ghcr.io/${{ github.repository }}/ticketbounty-app:latest # Pulls the pre-built image from GHCR
     container_name: ticketbounty-app
     working_dir: /app
     ports:
