@@ -5,6 +5,8 @@ import { Toaster } from "sonner";
 import Header from "@/components/header";
 import RedirectToast from "@/components/redirect-toast";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { Providers } from "@/providers";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,25 +33,23 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+      <Providers>
         <ThemeProvider>
-       <Header/>
-        <main  className="
-                min-h-screen flex-1
-                overflow-y-auto overflow-x-hidden
-                py-24 px-8
-                bg-secondary/20
-                flex flex-col
-              ">
-        {children}
-        </main>
-        <Toaster expand/>
-        </ThemeProvider>
-        
-        
-       
+          <Header/>
+            <main  className="
+                    min-h-screen flex-1
+                    overflow-y-auto overflow-x-hidden
+                    py-24 px-8
+                    bg-secondary/20
+                    flex flex-col
+                  ">
+            {children}
+            </main>
+            <Toaster expand/>
+          </ThemeProvider>
+        </Providers>
       </body>
       <RedirectToast/>
-      
     </html>
   );
 }
