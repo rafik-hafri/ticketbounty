@@ -1,4 +1,4 @@
-name: Deploy Ticketbounty App
+name: CI/CD
 
 on:
   push:
@@ -6,28 +6,34 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Install Docker Compose
-        run: |
-          sudo curl -L "https://github.com/docker/compose/releases/download/v2.19.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-          docker-compose --version
+      - name: Log in to GHCR
+        uses: docker/login-action@v2
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Docker Image
+      - name: Build Docker image
         run: |
-          docker-compose -f docker-compose.yml build
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          docker build -t ghcr.io/${{ github.repository }}/ticketbounty-app:latest .
 
+      - name: Push Docker image to GHCR
+        run: |
+          docker push ghcr.io/${{ github.repository }}/ticketbounty-app:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Set up SSH key
         run: |
           mkdir -p ~/.ssh
@@ -36,7 +42,7 @@ jobs:
           echo "${{ secrets.VPS_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
-      - name: Deploy to VPS using SSH
+      - name: Deploy
         uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ secrets.VPS_IP }}
@@ -46,9 +52,8 @@ jobs:
           script: |
             export DATABASE_URL=${{ secrets.DATABASE_URL }}
             cd /home/rafik/ticketbounty
-            git pull origin main
             docker-compose down
-            docker-compose up -d --build
+            docker-compose up -d
+            docker exec -T ticketbounty-app npx prisma migrate deploy
+            docker exec -T ticketbounty-app npx prisma generate
           debug: true
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
