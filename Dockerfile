@@ -13,8 +13,8 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
+
 COPY . .
-COPY prisma ./prisma
 
 RUN npm run postinstall
 
