@@ -53,6 +53,7 @@ jobs:
           script: |
             export DATABASE_URL=${{ secrets.DATABASE_URL }}
             cd /home/rafik/ticketbounty
+            git pull origin main 
             docker-compose down
             docker-compose up -d
             docker exec ticketbounty-app npx prisma migrate deploy
