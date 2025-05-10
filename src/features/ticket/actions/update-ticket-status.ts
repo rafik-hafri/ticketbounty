@@ -3,8 +3,8 @@
 import { TicketStatus } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 import { fromErrorToActionState, toActionState } from "@/components/form/utils/to-action-state"
-import { ticketsPath } from "@/paths"
 import { prisma } from "@/lib/prisma"
+import { ticketsPath } from "@/paths"
 
 export async function updateTicketStatus (id:string, status:TicketStatus) {
     await new Promise((resolve)=> setTimeout(resolve, 1000))
