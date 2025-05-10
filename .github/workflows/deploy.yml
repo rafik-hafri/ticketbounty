@@ -55,6 +55,6 @@ jobs:
             cd /home/rafik/ticketbounty
             docker-compose down
             docker-compose up -d
-            docker exec -T ticketbounty-app npx prisma migrate deploy
-            docker exec -T ticketbounty-app npx prisma generate
+            docker exec ticketbounty-app npx prisma migrate deploy
+            docker exec ticketbounty-app npx prisma generate
           debug: true
