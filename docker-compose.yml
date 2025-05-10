@@ -1,6 +1,6 @@
 services:
   app:
-    image: ghcr.io/${{ github.repository }}/ticketbounty-app:latest
+    image: ghcr.io/rafik-hafri/ticketbounty/ticketbounty-app:latest
     container_name: ticketbounty-app
     working_dir: /app
     ports:
