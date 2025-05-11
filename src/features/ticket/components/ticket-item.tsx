@@ -1,4 +1,4 @@
-import { Ticket } from '@prisma/client'
+import { Prisma} from '@prisma/client'
 import clsx from "clsx"
 import { LucideMoreVertical, LucidePencil, LucideSquareArrowOutUpRight } from 'lucide-react'
 import Link from 'next/link'
@@ -11,7 +11,13 @@ import TicketMoreMenu from './ticket-more-menu'
 
 
 type TicketItemProps = {
-   ticket: Ticket
+   ticket: Prisma.TicketGetPayload<{
+    include: {user: {
+        select:{
+            username:true
+        }
+    }}
+   }>
    isDetail?: boolean
 }
 function TicketItem({ticket, isDetail}: TicketItemProps) {
@@ -66,7 +72,7 @@ function TicketItem({ticket, isDetail}: TicketItemProps) {
                 </CardContent>
                 <CardFooter className="flex justify-between">
                     <p className="text-sm text-muted-foreground">
-                    {ticket.deadline} by 
+                    {ticket.deadline} by {ticket.user.username}
                     </p>
                     <p className="text-sm text-muted-foreground">
                     {toCurrencyFromCent(ticket.bounty)}
