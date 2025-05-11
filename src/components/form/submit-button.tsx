@@ -1,13 +1,13 @@
 "use client"
+import clsx from "clsx"
 import { LucideLoaderCircle } from "lucide-react"
+import { cloneElement, SVGProps } from "react"
 import { useFormStatus } from "react-dom"
 import { Button } from "../ui/button"
-import { cloneElement, SVGProps } from "react"
-import clsx from "clsx"
 
 type SubmitButtonProps = {
     label? : string,
-    icon: React.ReactElement<SVGProps<SVGSVGElement>>,
+    icon?: React.ReactElement<SVGProps<SVGSVGElement>>,
     variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link",
     size?: "default" | "sm" | "lg" | "icon"
 

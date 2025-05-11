@@ -1,10 +1,10 @@
 "use server"
 
-import { redirect } from "next/navigation"
-import { getAuth } from "./get-auth"
-import { signInPath } from "@/paths"
-import { lucia } from "@/lib/lucia"
 import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
+import { lucia } from "@/lib/lucia"
+import { signInPath } from "@/paths"
+import { getAuth } from "./get-auth"
 
 export const signOut  = async () => {
     const {session}  = await getAuth()

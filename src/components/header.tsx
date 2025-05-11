@@ -1,12 +1,12 @@
 "use client"
 import { LucideKanban, LucideLogOut } from 'lucide-react'
 import Link from 'next/link'
-import { homePath, signInPath, signUpPath, ticketsPath } from '@/paths'
-import ThemeSwitcher from './theme/theme-switcher'
-import { buttonVariants } from './ui/button'
-import { SubmitButton } from './form/submit-button'
 import { signOut } from '@/features/auth/actions/sign-out'
 import { useAuth } from '@/features/auth/hooks/use-auth'
+import { homePath, signInPath, signUpPath, ticketsPath } from '@/paths'
+import { SubmitButton } from './form/submit-button'
+import ThemeSwitcher from './theme/theme-switcher'
+import { buttonVariants } from './ui/button'
 
  function Header() {
  const {user, isFetched} = useAuth()

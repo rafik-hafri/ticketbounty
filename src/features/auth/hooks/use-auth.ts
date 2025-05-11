@@ -1,7 +1,7 @@
+import {User as AuthUser} from "lucia"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { getAuth } from "../actions/get-auth"
-import {User as AuthUser} from "lucia"
 
 
 export const useAuth = () => {

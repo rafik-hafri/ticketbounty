@@ -1,11 +1,11 @@
 "use client"
+import { useActionState } from "react"
+import FieldError from "@/components/form/field-error"
+import Form from "@/components/form/form"
 import { SubmitButton } from "@/components/form/submit-button"
+import { EMPTY_ACTION_STATE } from "@/components/form/utils/to-action-state"
 import { Input } from "@/components/ui/input"
 import { signUp } from "../actions/sign-up"
-import { useActionState } from "react"
-import { EMPTY_ACTION_STATE } from "@/components/form/utils/to-action-state"
-import Form from "@/components/form/form"
-import FieldError from "@/components/form/field-error"
 
 function SignUpForm() {
     const [actionState, action] = useActionState(signUp, EMPTY_ACTION_STATE)
