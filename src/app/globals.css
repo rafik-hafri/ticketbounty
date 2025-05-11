@@ -85,6 +85,20 @@ body {
   }
 }
 
+@keyframes header-from-top {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
 .animate-fade-in-from-top {
   animation: fade-in-from-top 0.5s ease-out;
+}
+
+.animate-header-from-top {
+  animation: header-from-top 0.5s ease-out;
 }
