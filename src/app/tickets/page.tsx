@@ -9,7 +9,8 @@ import TicketUpsertForm from "@/features/ticket/components/ticket-upsert"
 
 export const dynamic = "force-dynamic" 
 // const revalidate = 30 re-validate data all 30s
- function TicketsPage() {
+ async function TicketsPage() {
+ 
 
   
 
