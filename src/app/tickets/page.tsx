@@ -3,9 +3,9 @@ import { Suspense } from "react"
 import CardCompact from "@/components/card-compact"
 import Heading from "@/components/heading"
 import Spinner from "@/components/spinner"
-import { getAuth } from "@/features/auth/actions/get-auth"
 import TicketList from "@/features/ticket/components/ticket-list"
 import TicketUpsertForm from "@/features/ticket/components/ticket-upsert"
+import { getAuth } from "@/features/auth/actions/get-auth"
 
 
 export const dynamic = "force-dynamic" 
@@ -27,7 +27,7 @@ export const dynamic = "force-dynamic"
         
         />
         <Suspense fallback={<Spinner/>}>
-            <TicketList userId={user.id}/>
+            <TicketList userId={user?.id}/>
          </Suspense>
 
       
