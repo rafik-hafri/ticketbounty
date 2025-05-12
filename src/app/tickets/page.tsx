@@ -12,9 +12,6 @@ export const dynamic = "force-dynamic"
 // const revalidate = 30 re-validate data all 30s
  async function TicketsPage() {
  const {user} = await getAuth()
-
-  
-
   return (
     
     <div className='flex-1 flex flex-col gap-y-8'>
@@ -24,15 +21,10 @@ export const dynamic = "force-dynamic"
         description="A new ticket will be created"
         className="w-full max-w-[420px] self-center"
         content= {<TicketUpsertForm/>}
-        
         />
         <Suspense fallback={<Spinner/>}>
             <TicketList userId={user?.id}/>
-         </Suspense>
-
-      
-       
-        
+         </Suspense> 
     </div>
     
     

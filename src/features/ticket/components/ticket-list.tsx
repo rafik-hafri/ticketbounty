@@ -2,7 +2,7 @@ import { getTickets } from "../queries/get-tickets"
 import TicketItem from "./ticket-item"
 
 type TicketListProps = {
-  userId?: string
+  userId?: string | undefined
 }
 async function TicketList({userId}: TicketListProps) {
     const tickets = await getTickets(userId)
