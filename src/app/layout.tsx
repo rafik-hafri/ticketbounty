@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import Header from "@/components/header";
 import RedirectToast from "@/components/redirect-toast";
+import Sidebar from "@/components/sidebar/components/sidebar";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 
 
@@ -36,6 +37,8 @@ export default function RootLayout({
      
         <ThemeProvider>
           <Header/>
+          <div className="flex h-screen overflow-hidden border-collapse">
+             <Sidebar/>
             <main  className="
                     min-h-screen flex-1
                     overflow-y-auto overflow-x-hidden
@@ -45,6 +48,8 @@ export default function RootLayout({
                   ">
             {children}
             </main>
+          </div>
+         
             <Toaster expand/>
           </ThemeProvider>
        
