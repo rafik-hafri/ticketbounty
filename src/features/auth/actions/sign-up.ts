@@ -2,11 +2,12 @@
 
 import { hash } from "@node-rs/argon2"
 import { Prisma } from "@prisma/client"
-import { cookies } from "next/headers"
 import { z } from "zod"
 import { ActionState, fromErrorToActionState, toActionState } from "@/components/form/utils/to-action-state"
-import { lucia } from "@/lib/lucia"
 import { prisma } from "@/lib/prisma"
+import { signInPath } from "@/paths"
+import { redirect } from "next/navigation"
+import { setCookieByKey } from "@/actions/cookies"
 
 const signUpSchema = z
 .object({
@@ -41,13 +42,13 @@ export const signUp = async(_actionState: ActionState, formData:FormData) => {
                 passwordHash
             }
         })
-        const session = await lucia.createSession(user.id, {})
-        const sessionCookie = lucia.createSessionCookie(session.id)
-        ;(await cookies()).set(
-            sessionCookie.name,
-            sessionCookie.value,
-            sessionCookie.attributes
-        )
+        // const session = await lucia.createSession(user.id, {})
+        // const sessionCookie = lucia.createSessionCookie(session.id)
+        // ;(await cookies()).set(
+        //     sessionCookie.name,
+        //     sessionCookie.value,
+        //     sessionCookie.attributes
+        // )
 
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002"){
@@ -59,7 +60,9 @@ export const signUp = async(_actionState: ActionState, formData:FormData) => {
         }
         return fromErrorToActionState(error, formData)
     }
-    return toActionState("SUCCESS", "You're all set! Your account has been created.")
+    await setCookieByKey("toast","You're all set! Your account has been created." )
+    redirect(signInPath())
+    // return toActionState("SUCCESS", "You're all set! Your account has been created.")
    
 
 }
