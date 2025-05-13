@@ -29,7 +29,7 @@ function SidebarItem({isOpen, navItem}: SidebarItemProps) {
         className={cn(
             "absolute left-12 text-base duration-200",
             isOpen ? "md:block hidden" : "w-[78px]",
-            !isOpen && closedClasName
+            !isOpen && closedClasName  
         )}
         >
             {navItem.title}

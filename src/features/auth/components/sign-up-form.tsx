@@ -17,8 +17,8 @@ function SignUpForm() {
         <FieldError actionState={actionState} name="email"/>
         <Input name="password" placeholder="Password" type="password" />
         <FieldError actionState={actionState} name="password"/>
-        <Input name="confirmPassword" placeholder="confirm password" type="passsword"/>
-        <FieldError actionState={actionState} name="confirm password"/>
+        <Input name="confirmPassword" placeholder="confirm password" type="password"/>
+        <FieldError actionState={actionState} name="confirmPassword"/>
         <SubmitButton label="Sign Up"/>
     </Form>
 

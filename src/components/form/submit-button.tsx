@@ -15,7 +15,7 @@ type SubmitButtonProps = {
 export const SubmitButton = ({label, icon, variant, size}:SubmitButtonProps) => {
     const {pending} = useFormStatus()
     return (
-        <Button disabled={pending} type='submit' variant={variant} size={size}>
+        <Button disabled={pending} type='submit' variant={variant} size={size} className="flex justify-center items-center">
             {pending && (<LucideLoaderCircle className={clsx('mr-2 h-4 w-4 animate-spin',{
                 "mr-2" : !!label
             })}
@@ -24,9 +24,7 @@ export const SubmitButton = ({label, icon, variant, size}:SubmitButtonProps) => 
             {pending ? null : (
                 <span>
                 {icon ? (
-                    <span className={clsx({
-                        "ml-2": !!label
-                    })}>
+                    <span>
                         {cloneElement(icon, {
                             className: "h-4 w-4"
                         })}

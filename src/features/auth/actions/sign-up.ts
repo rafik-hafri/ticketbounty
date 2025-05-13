@@ -1,12 +1,14 @@
 "use server"
-
 import { hash } from "@node-rs/argon2"
 import { Prisma } from "@prisma/client"
 import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 import { z } from "zod"
+import { setCookieByKey } from "@/actions/cookies"
 import { ActionState, fromErrorToActionState, toActionState } from "@/components/form/utils/to-action-state"
 import { lucia } from "@/lib/lucia"
 import { prisma } from "@/lib/prisma"
+import { signInPath } from "@/paths"
 
 const signUpSchema = z
 .object({
@@ -59,7 +61,6 @@ export const signUp = async(_actionState: ActionState, formData:FormData) => {
         }
         return fromErrorToActionState(error, formData)
     }
-    return toActionState("SUCCESS", "You're all set! Your account has been created.")
-   
-
+    await setCookieByKey("toast","You're all set! Your account has been created." )
+    redirect(signInPath())
 }

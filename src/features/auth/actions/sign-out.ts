@@ -6,6 +6,7 @@ import { lucia } from "@/lib/lucia"
 import { signInPath } from "@/paths"
 import { getAuth } from "./get-auth"
 
+
 export const signOut  = async () => {
     const {session}  = await getAuth()
     if(!session) {
@@ -18,6 +19,5 @@ export const signOut  = async () => {
         sessionCookie.name,
         sessionCookie.value,
         sessionCookie.attributes
-    )
-    redirect(signInPath())
+    )   
 }

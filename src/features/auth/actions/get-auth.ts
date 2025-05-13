@@ -3,9 +3,10 @@ import { cookies } from "next/headers"
 import { cache } from "react"
 import { lucia } from "@/lib/lucia"
 
-//  This function is wrapped in `react.cache` to memoize its result during a single request.
-//  This avoids calling `lucia.validateSession()` and accessing cookies multiple times
-//  in the same server request, improving performance and ensuring consistency.
+// `cache` memoizes this function to ensure it runs **once per server request**.
+// This prevents redundant calls to `lucia.validateSession()` and repeated cookie access
+// during React Server Component (RSC) rendering, improving performance and ensuring
+// consistent session state throughout the request lifecycle.
 export const getAuth = cache(async () => {
     const sessionId = (await cookies()).get(lucia.sessionCookieName)?.value ?? null
     if (!sessionId) {
@@ -15,11 +16,11 @@ export const getAuth = cache(async () => {
         }
     }
     const result = await lucia.validateSession(sessionId)
-    // In React Server Components (RSC), attempting to mutate headers (e.g., setting cookies) 
-    // is not guaranteed to work because streaming may have already started.
-    // This `try-catch` ensures that if `cookies().set(...)` fails due to being in a streamed RSC context,
-    // we silently ignore the error instead of crashing the whole render.
-    // Cookie mutation is only safe in contexts like middleware, server actions, or route handlers.
+    // **This server action can be triggered in two contexts:**
+    // 1. **During RSC rendering** (initial page load): Cookie mutations WILL FAIL because
+    //    HTTP headers are already sent. The `try-catch` silently ignores these errors.
+    // 2. **As a standalone server action** (client-triggered): Cookie mutations WILL WORK
+    //    because this executes in a fresh request context before headers are sent.
     try {
         if(result.session && result.session.fresh){
             const sessionCookie = lucia.createSessionCookie(result.session.id)
@@ -38,8 +39,11 @@ export const getAuth = cache(async () => {
             )
         }
     } catch {
-        // do nothing if used in a RSC
-
+        // **Silently ignore errors in RSC rendering context.**
+        // Cookie mutations are only allowed in:
+        // - Middleware (pre-render phase)
+        // - Client-triggered server actions
+        // - Route Handlers (API endpoints)
     }
     return result
 })
