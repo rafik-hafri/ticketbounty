@@ -4,7 +4,6 @@ import { useAuth } from '@/features/auth/hooks/use-auth'
 import { cn } from '@/lib/utils'
 import { navItems } from '../constants'
 import SidebarItem from './sidebar-item'
-import { ChevronLeft, Menu } from 'lucide-react'
 
 function Sidebar() {
     const {user, isFetched} = useAuth()
