@@ -43,7 +43,7 @@ export default function RootLayout({
                     ml-auto
                     min-h-screen flex-1
                     overflow-y-auto overflow-x-hidden
-                    py-24 px-8
+                    py-24 px-5 md:px-8
                     bg-secondary/20
                     flex flex-col
                     

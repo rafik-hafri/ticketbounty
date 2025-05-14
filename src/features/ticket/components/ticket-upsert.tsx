@@ -47,9 +47,9 @@ datePickerImperativeHandleRef.current?.reset()
         <Label htmlFor="content">Content</Label>
         <Textarea id="content" name="content" defaultValue={(actionState.payload?.get("content") as string) ?? ticket?.content} />
         <FieldError actionState={actionState} name="content"/>
-        <div className='flex gap-x-2 mb-1'>
-            <div className='w-1/2'>
-                <Label htmlFor='deadline'>Deadline</Label>
+        <div className='flex flex-col sm:flex-row gap-y-2 gap-x-2 mb-1'>
+            <div className='w-full sm:w-1/2'>
+                <Label htmlFor='deadline' className='pb-1'>Deadline</Label>
                 <DatePicker
                 id="deadline"
                 name="deadline"
@@ -62,8 +62,8 @@ datePickerImperativeHandleRef.current?.reset()
                  <FieldError actionState={actionState} name="deadline" />
 
             </div>
-            <div className="w-1/2">
-            <Label htmlFor="bounty">Bounty ($)</Label>
+            <div className="w-full sm:w-1/2">
+            <Label htmlFor="bounty" className='pb-1'>Bounty ($)</Label>
             <Input
                 id="bounty"
                 name="bounty"
@@ -75,11 +75,9 @@ datePickerImperativeHandleRef.current?.reset()
                 }
             />
             <FieldError actionState={actionState} name="bounty" />
+            
+            </div>
         </div>
-
-        </div>
-
-
         <SubmitButton label={ticket ? "Edit" : "Create"}/>
 
     </Form>

@@ -9,7 +9,7 @@ type SubmitButtonProps = {
     label? : string,
     icon?: React.ReactElement<SVGProps<SVGSVGElement>>,
     variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link",
-    size?: "default" | "sm" | "lg" | "icon"
+    size?: "default" | "sm" | "lg" | "icon" | "xs"
 
 }
 export const SubmitButton = ({label, icon, variant, size}:SubmitButtonProps) => {

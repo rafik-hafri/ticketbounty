@@ -23,9 +23,9 @@ function Sidebar() {
   return (
     <nav className={cn(
         "animate-sidebar-from-left",
-        "h-screen border-r mt-16 bg-black",
+        "h-screen border-r mt-16 bg-secondary/28",
         isTransition && "duration-200",
-        isOpen ? "md:w-60 w-[78px]" : "w-[78px]",
+        isOpen ? "md:w-60 w-[65px]" : "w-[65px]",
         !user && "hidden"
     )}
     // style={{ height: 'calc(100vh - 64px)' }}

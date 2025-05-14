@@ -17,13 +17,13 @@ import {  buttonVariants } from './ui/button'
   const navItems  = user ? (
     <>
       <form action={signOut}>
-        <SubmitButton label="Sign Out" icon={<LucideLogOut/>}/>
+        <SubmitButton label="Sign Out" size="xs" icon={<LucideLogOut/>}/>
       </form>
       </>
   ) : (
      <>
-      <Link href={signUpPath()} className={buttonVariants({variant: "default", size:"sm"},)} >Sign Up</Link>
-      <Link href={signInPath()} className={buttonVariants({variant: "default", size:"sm"})} >Sign In</Link>
+      <Link href={signUpPath()} className={buttonVariants({variant: "default", size:"xs", className:"text-xs md:text-sm"})} >Sign Up</Link>
+      <Link href={signInPath()} className={buttonVariants({variant: "default", size:"xs",className:"text-xs md:text-sm"})} >Sign In</Link>
     </>
   )
   return (
@@ -32,7 +32,7 @@ import {  buttonVariants } from './ui/button'
     
       <Link href={homePath()} className={buttonVariants({variant: "ghost"})}>
       <LucideKanban/>
-      <h1 className="text-lg font-semibold ml-2">
+      <h1 className=" text-xs md:text-lg font-semibold ml-2">
       TicketBounty
       </h1>
       </Link>
