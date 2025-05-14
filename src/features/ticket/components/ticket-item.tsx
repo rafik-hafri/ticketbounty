@@ -62,7 +62,7 @@ async function TicketItem({ticket, isDetail}: TicketItemProps) {
         "max-w-[420px]": !isDetail,
         "max-w-[580px]": isDetail
     })}>
-            <Card  className='w-full max-w-[420px]'> 
+            <Card  className='w-full max-w-[480px]'> 
                 <CardHeader>
                     <CardTitle className="flex gap-x-2">
                          <span>{TICKET_ICONS[ticket.status]}</span>
