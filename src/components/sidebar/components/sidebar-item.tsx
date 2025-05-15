@@ -1,5 +1,5 @@
+import { Separator } from "@radix-ui/react-separator"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { closedClasName } from "../constants"
@@ -9,13 +9,15 @@ import { NavItem } from "../types"
  type SidebarItemProps = {
         isOpen: boolean
         navItem: NavItem
+        isActive:boolean
     }
 
-function SidebarItem({isOpen, navItem}: SidebarItemProps) {
-   const path = usePathname()
-   const isActive = path === navItem.href
+function SidebarItem({isOpen, navItem, isActive}: SidebarItemProps) {
+ 
    const Icon = navItem.icon
   return (
+    <>
+    {navItem.separator && <Separator/>}
     <Link
     href={navItem.href}
     className={cn(
@@ -35,6 +37,7 @@ function SidebarItem({isOpen, navItem}: SidebarItemProps) {
             {navItem.title}
         </span>
     </Link>
+    </>
   )
 }
 
