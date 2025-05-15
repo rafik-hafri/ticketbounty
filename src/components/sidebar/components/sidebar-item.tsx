@@ -1,9 +1,9 @@
+import { Separator } from "@radix-ui/react-separator"
 import Link from "next/link"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { closedClasName } from "../constants"
 import { NavItem } from "../types"
-import { Separator } from "@radix-ui/react-separator"
 
 
  type SidebarItemProps = {

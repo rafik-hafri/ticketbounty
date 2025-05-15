@@ -1,12 +1,13 @@
-import { signOut } from '@/features/auth/actions/sign-out'
-import React from 'react'
+import { DropdownMenu, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
 import {User as AuthUser} from "lucia"
 import {  LucideLock, LucideLogOut, LucideUser } from 'lucide-react'
-import { DropdownMenu, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
+import Link from 'next/link'
+import React from 'react'
+import { signOut } from '@/features/auth/actions/sign-out'
+import { accountPasswordPath, accountProfilePath } from '@/paths'
 import { Avatar, AvatarFallback } from './ui/avatar'
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from './ui/dropdown-menu'
-import Link from 'next/link'
-import { accountPasswordPath, accountProfilePath } from '@/paths'
+
 type AccountDropdownProps = {
     user: AuthUser
 }

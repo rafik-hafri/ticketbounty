@@ -1,12 +1,12 @@
 "use client"
+import { usePathname } from 'next/navigation'
 import React, { useState } from 'react'
 import { useAuth } from '@/features/auth/hooks/use-auth'
 import { cn } from '@/lib/utils'
+import { signInPath, signUpPath } from '@/paths'
+import { getActivePath } from '@/utils/get-actuive-path'
 import { navItems } from '../constants'
 import SidebarItem from './sidebar-item'
-import { usePathname } from 'next/navigation'
-import { getActivePath } from '@/utils/get-actuive-path'
-import { signInPath, signUpPath } from '@/paths'
 
 function Sidebar() {
     const {user, isFetched} = useAuth()

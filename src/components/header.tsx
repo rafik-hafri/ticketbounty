@@ -3,9 +3,9 @@ import { LucideKanban } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '@/features/auth/hooks/use-auth'
 import { homePath, signInPath, signUpPath } from '@/paths'
+import AccountDropdown from './account-dropdown'
 import ThemeSwitcher from './theme/theme-switcher'
 import {  buttonVariants } from './ui/button'
-import AccountDropdown from './account-dropdown'
 
  function Header() {
  const {user, isFetched} = useAuth()
