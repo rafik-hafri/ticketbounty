@@ -4,11 +4,14 @@ import { useAuth } from '@/features/auth/hooks/use-auth'
 import { cn } from '@/lib/utils'
 import { navItems } from '../constants'
 import SidebarItem from './sidebar-item'
+import { usePathname } from 'next/navigation'
+import { getActivePath } from '@/utils/get-actuive-path'
+import { signInPath, signUpPath } from '@/paths'
 
 function Sidebar() {
     const {user, isFetched} = useAuth()
-
-  
+    const pathName = usePathname()
+    const {activeIndex} = getActivePath(pathName, navItems.map((item) => item.href),[signInPath(), signUpPath()])
     const [isTransition, setTransition] = useState(false)
     const [isOpen, setOpen] = useState(false)
     
@@ -35,10 +38,11 @@ function Sidebar() {
     
         <div className="px-3 py-2"> 
             <nav className="space-y-2">
-                {navItems.map((navItem) => (
+                {navItems.map((navItem, index) => (
                     <SidebarItem key={navItem.title} 
                     isOpen={isOpen}
                     navItem={navItem}
+                    isActive={activeIndex === index}
                     />
                 ))}
 
