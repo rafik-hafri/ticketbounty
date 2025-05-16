@@ -1,18 +1,35 @@
 import SearchInput from "@/components/search-input"
+import SortSelect from "@/components/sort-select"
 import { getTickets } from "../queries/get-tickets"
+import { ParsedSearchParams } from "../types"
 import TicketItem from "./ticket-item"
-import { SearchParams } from "../types"
 
 type TicketListProps = {
   userId?: string | undefined
-  searchParams: SearchParams
+  searchParams: ParsedSearchParams
 }
 async function TicketList({userId, searchParams}: TicketListProps) {
     const tickets = await getTickets(userId, searchParams)
   return (
      <div className='flex-1 flex flex-col items-center gap-y-4 animate-fade-in-from-top'>
-        <div className="w-full max-w-[420px]"> 
+        <div className="w-full max-w-[420px] flex gap-x-2"> 
           <SearchInput placeholder="Search tickets..."/>
+          <SortSelect 
+           options= {
+            [
+              {
+                sortKey: "createdAt",
+                sortValue: "desc",
+                label:"Newest"
+              },
+              {
+                sortKey: "bounty",
+                sortValue:"desc",
+                label:"Bounty"
+              }
+            ]
+           }
+          />
         </div>
             {tickets.map((ticket)=> (
                 <TicketItem key={ticket.id} ticket={ticket}/>

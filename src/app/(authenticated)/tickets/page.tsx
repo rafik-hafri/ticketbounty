@@ -1,4 +1,5 @@
 
+import { SearchParams } from 'nuqs/server'
 import { Suspense } from "react"
 import CardCompact from "@/components/card-compact"
 import Heading from "@/components/heading"
@@ -6,7 +7,7 @@ import Spinner from "@/components/spinner"
 import { getAuth } from "@/features/auth/actions/get-auth"
 import TicketList from "@/features/ticket/components/ticket-list"
 import TicketUpsertForm from "@/features/ticket/components/ticket-upsert"
-import { SearchParams } from '@/features/ticket/types'
+import { searchParamsCache } from "@/features/ticket/types"
 
 
 type TicketsPageProps = {
@@ -27,7 +28,7 @@ export const dynamic = "force-dynamic"
         content= {<TicketUpsertForm/>}
         />
         <Suspense fallback={<Spinner/>}>
-            <TicketList userId={user?.id} searchParams={searchParams}/>
+            <TicketList userId={user?.id} searchParams={searchParamsCache.parse(searchParams)}/>
          </Suspense> 
     </div>
     

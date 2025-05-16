@@ -1,8 +1,9 @@
+import { SearchParams } from 'nuqs/server'
 import { Suspense } from 'react'
 import Heading from '@/components/heading'
 import Spinner from '@/components/spinner'
 import TicketList from '@/features/ticket/components/ticket-list'
-import { SearchParams } from '@/features/ticket/types'
+import { searchParamsCache } from '@/features/ticket/types'
 
 export const dynamic = "force-dynamic" 
 
@@ -16,7 +17,7 @@ function HomePage({searchParams}: HomePageProps) {
       <Heading title="All Tickets" description="Tickets by everyone at one place"/>
 
       <Suspense fallback={<Spinner/>}>
-            <TicketList searchParams={searchParams}/>
+            <TicketList searchParams={searchParamsCache.parse(searchParams)}/>
       </Suspense>
 </div>  
 )
