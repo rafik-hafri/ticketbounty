@@ -28,4 +28,4 @@ export const searchParamsCache = createSearchParamsCache({
     ...sortParser
 })
 
-export type ParsedSearchParams = ReturnType<typeof searchParamsCache.all>
+export type ParsedSearchParams = Awaited<ReturnType<typeof searchParamsCache.all>>

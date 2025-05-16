@@ -11,7 +11,7 @@ import { searchParamsCache } from "@/features/ticket/types"
 
 
 type TicketsPageProps = {
-  searchParams: SearchParams
+  searchParams: Promise<SearchParams>
 }
 export const dynamic = "force-dynamic" 
 // const revalidate = 30 re-validate data all 30s
@@ -28,7 +28,7 @@ export const dynamic = "force-dynamic"
         content= {<TicketUpsertForm/>}
         />
         <Suspense fallback={<Spinner/>}>
-            <TicketList userId={user?.id} searchParams={searchParamsCache.parse(searchParams)}/>
+            <TicketList userId={user?.id} searchParams={searchParamsCache.parse(await searchParams)}/>
          </Suspense> 
     </div>
     
