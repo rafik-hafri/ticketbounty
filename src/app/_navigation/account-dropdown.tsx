@@ -1,12 +1,11 @@
-import { DropdownMenu, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
 import {User as AuthUser} from "lucia"
 import {  LucideLock, LucideLogOut, LucideUser } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import { signOut } from '@/features/auth/actions/sign-out'
 import { accountPasswordPath, accountProfilePath } from '@/paths'
-import { Avatar, AvatarFallback } from './ui/avatar'
-import { DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from './ui/dropdown-menu'
+import { Avatar, AvatarFallback } from '../../components/ui/avatar'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../../components/ui/dropdown-menu'
 
 type AccountDropdownProps = {
     user: AuthUser
@@ -39,11 +38,9 @@ function AccountDropdown({user}: AccountDropdownProps ) {
                     </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild>
-                    <form action={signOut}>
-                        <LucideLogOut className="mr-2 h-4 w-4" />
-                        <button type="submit">Sign Out</button>
-                    </form>
+                    <DropdownMenuItem onSelect={()=> signOut()}>
+                         <LucideLogOut className="mr-2 h-4 w-4" />
+                         <span>Sign Out</span>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

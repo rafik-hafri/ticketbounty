@@ -2,9 +2,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
-import Header from "@/components/header";
+import Header from "@/app/_navigation/header";
+import Sidebar from "@/app/_navigation/sidebar/components/sidebar";
 import RedirectToast from "@/components/redirect-toast";
-import Sidebar from "@/components/sidebar/components/sidebar";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 
 

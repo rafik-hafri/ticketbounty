@@ -19,5 +19,7 @@ export const signOut  = async () => {
         sessionCookie.name,
         sessionCookie.value,
         sessionCookie.attributes
-    )   
+    )  
+   redirect(signInPath())
+    
 }
