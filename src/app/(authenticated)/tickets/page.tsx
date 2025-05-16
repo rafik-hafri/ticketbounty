@@ -6,11 +6,15 @@ import Spinner from "@/components/spinner"
 import { getAuth } from "@/features/auth/actions/get-auth"
 import TicketList from "@/features/ticket/components/ticket-list"
 import TicketUpsertForm from "@/features/ticket/components/ticket-upsert"
+import { SearchParams } from '@/features/ticket/types'
 
 
+type TicketsPageProps = {
+  searchParams: SearchParams
+}
 export const dynamic = "force-dynamic" 
 // const revalidate = 30 re-validate data all 30s
- async function TicketsPage() {
+ async function TicketsPage({searchParams}: TicketsPageProps ) {
  const {user} = await getAuth()
   return (
     
@@ -23,7 +27,7 @@ export const dynamic = "force-dynamic"
         content= {<TicketUpsertForm/>}
         />
         <Suspense fallback={<Spinner/>}>
-            <TicketList userId={user?.id}/>
+            <TicketList userId={user?.id} searchParams={searchParams}/>
          </Suspense> 
     </div>
     

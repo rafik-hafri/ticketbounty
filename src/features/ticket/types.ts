@@ -7,3 +7,6 @@ export type Ticket = {
     status: TicketStatus
 
 }
+export type SearchParams = {
+    search:string
+}
