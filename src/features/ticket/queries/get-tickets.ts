@@ -2,14 +2,20 @@ import { prisma } from "@/lib/prisma"
 import { ParsedSearchParams } from "../types"
 
 export const getTickets = async (userId: string | undefined, searchParams: ParsedSearchParams) => {
-   const tickets = await prisma.ticket.findMany({
-   where: {
+    const skip = searchParams.page * searchParams.size
+    const take = searchParams.size
+
+    const where = {
     userId,
-         title: {
-        contains: searchParams.search,
-        mode:"insensitive"
+     title: {
+    contains: searchParams.search,
+    mode:"insensitive" as const,
+   }
     }
-   },
+   const tickets = await prisma.ticket.findMany({
+   where,
+    skip,
+    take,
     orderBy: {
         // createdAt: "desc"
         // ...(searchParams.sort === "newest" && {createdAt:"desc"}),
@@ -24,5 +30,15 @@ export const getTickets = async (userId: string | undefined, searchParams: Parse
         }
     }
    })
-   return tickets || null
+   const count = await prisma.ticket.count({
+    where,
+   })
+   return {
+    list: tickets,
+    metadata: {
+        count,
+        hasNextPage: count > skip + take
+    }
+    
+    } 
 }

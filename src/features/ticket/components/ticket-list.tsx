@@ -1,6 +1,7 @@
 import { getTickets } from "../queries/get-tickets"
 import { ParsedSearchParams } from "../types"
 import TicketItem from "./ticket-item"
+import TicketPagination from "./ticket-pagination"
 import TicketSearchInput from "./ticket-search-input"
 import TicketSortSelect from "./ticket-sort-select"
 
@@ -9,7 +10,7 @@ type TicketListProps = {
   searchParams: ParsedSearchParams
 }
 async function TicketList({userId, searchParams}: TicketListProps) {
-    const tickets = await getTickets(userId, searchParams)
+    const {list: tickets, metadata: ticketMetadata} = await getTickets(userId, searchParams)
   return (
      <div className='flex-1 flex flex-col items-center gap-y-4 animate-fade-in-from-top'>
         <div className="w-full max-w-[420px] flex gap-x-2"> 
@@ -34,6 +35,9 @@ async function TicketList({userId, searchParams}: TicketListProps) {
             {tickets.map((ticket)=> (
                 <TicketItem key={ticket.id} ticket={ticket}/>
             ))}
+        <div className="w-full max-w-[420px]">
+            <TicketPagination paginatedTicketMetadata={ticketMetadata}/>
+        </div>
     
     </div>
   )
