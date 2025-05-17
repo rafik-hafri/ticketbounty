@@ -6,11 +6,11 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { getAuth } from '@/features/auth/actions/get-auth'
 import { isOwner } from '@/features/auth/utils/is-owner'
+import Comments from '@/features/comment/components/comment'
 import { ticketEditPath, ticketPath } from '@/paths'
 import { toCurrencyFromCent } from '@/utils/currency'
 import { TICKET_ICONS } from '../constants'
 import TicketMoreMenu from './ticket-more-menu'
-import Comments from '@/features/comment/components/comment'
 
 
 type TicketItemProps = {
