@@ -1,19 +1,22 @@
 "use client"
-import { useQueryStates} from "nuqs"
-import { sortOptions, sortParser } from '@/features/ticket/types'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
 
 
-type Option = {
+export type SortSelectOption = {
         label: string,
         sortValue:string,
         sortKey:string
 }
-type SortSelectProps = {
-    options:Option []
+type SortObject = {
+    sortKey: string
+    sortValue: string
 }
-function SortSelect({ options}:SortSelectProps) {
-    const [sort, setSort] = useQueryStates(sortParser, sortOptions)
+type SortSelectProps = {
+    options:SortSelectOption []
+    value:SortObject
+    onChange: (sort:SortObject) => void
+}
+function SortSelect({ options, value, onChange}:SortSelectProps) {
     // const searchParams = useSearchParams()
     // const pathname = usePathname()
     // const {replace} = useRouter()
@@ -31,14 +34,14 @@ function SortSelect({ options}:SortSelectProps) {
         //     scroll:false
         // })
         const [sortKey, sortValue] = compositeKey.split("_")
-        console.log(sortKey)
-        setSort({
+        
+        onChange({
             sortKey,
             sortValue
         })
     }
   return (
-    <Select defaultValue={sort.sortKey + "_" + sort.sortValue} onValueChange={handleSort} >
+    <Select defaultValue={value.sortKey + "_" + value.sortValue} onValueChange={handleSort} >
       <SelectTrigger>
         <SelectValue />
       </SelectTrigger>

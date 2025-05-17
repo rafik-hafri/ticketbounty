@@ -1,14 +1,13 @@
 "use client"
-import {useQueryState} from "nuqs"
 import {useDebouncedCallback} from "use-debounce"
-import { searchParser } from "@/features/ticket/types"
 import { Input } from './ui/input'
 
 type SearchInoutProps = {
-    placeholder: string
+    placeholder: string,
+    value:string,
+    onChange:(value: string) => void
 }
-function SearchInput({placeholder}:SearchInoutProps) {
-    const [search, setSearch] = useQueryState("search", searchParser)
+function SearchInput({placeholder, value, onChange}:SearchInoutProps) {
     // const searchParams = useSearchParams()
     // const pathname = usePathname()
     // const {replace} = useRouter()
@@ -24,10 +23,10 @@ function SearchInput({placeholder}:SearchInoutProps) {
         // replace(`${pathname}?${params.toString()}`, {
         //     scroll:false
         // })
-        setSearch(event.target.value)
+        onChange(event.target.value)
     }, 300)
   return (
-    <Input  defaultValue={search} placeholder= {placeholder} onChange={handleSearch}/>
+    <Input  defaultValue={value} placeholder= {placeholder} onChange={handleSearch}/>
 
   )
 }
