@@ -12,7 +12,9 @@ export const getTickets = async (userId: string | undefined, searchParams: Parse
     mode:"insensitive" as const,
    }
     }
-   const tickets = await prisma.ticket.findMany({
+  
+   const [tickets, count] = await prisma.$transaction([
+   prisma.ticket.findMany({
    where,
     skip,
     take,
@@ -29,10 +31,11 @@ export const getTickets = async (userId: string | undefined, searchParams: Parse
             }
         }
     }
-   })
-   const count = await prisma.ticket.count({
+   }),
+   prisma.ticket.count({
     where,
    })
+   ])
    return {
     list: tickets,
     metadata: {

@@ -8,6 +8,7 @@ type TicketSearchInputProps = {
 }
 function TicketSearchInput({placeholder}:TicketSearchInputProps) {
     const [search, setSearch] = useQueryState("search", searchParser)
+    
 
   return (
     <SearchInput 
