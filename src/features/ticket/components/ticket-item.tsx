@@ -7,6 +7,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { getAuth } from '@/features/auth/actions/get-auth'
 import { isOwner } from '@/features/auth/utils/is-owner'
 import Comments from '@/features/comment/components/comment'
+import { CommentWithMetadata } from '@/features/comment/types'
 import { ticketEditPath, ticketPath } from '@/paths'
 import { toCurrencyFromCent } from '@/utils/currency'
 import { TICKET_ICONS } from '../constants'
@@ -21,9 +22,10 @@ type TicketItemProps = {
         }
     }}
    }>
-   isDetail?: boolean
+   isDetail?: boolean,
+   comments?: CommentWithMetadata[]
 }
-async function TicketItem({ticket, isDetail}: TicketItemProps) {
+async function TicketItem({ticket, isDetail, comments}: TicketItemProps) {
     const {user} = await getAuth()
     const isTicketOwner = isOwner(user, ticket)
     const editButton = isTicketOwner ? (
@@ -96,7 +98,10 @@ async function TicketItem({ticket, isDetail}: TicketItemProps) {
                 </>)}          
                 </div>
         </div>
-       {isDetail ? <Comments ticketId={ticket.id}/> : null}
+       {isDetail ?
+          <Comments ticketId={ticket.id} comments={comments}/>
+         : null
+        }
     </div>
              )
 }
