@@ -7,11 +7,11 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { getAuth } from '@/features/auth/actions/get-auth'
 import { isOwner } from '@/features/auth/utils/is-owner'
 import Comments from '@/features/comment/components/comment'
+import { CommentWithMetadata } from '@/features/comment/types'
 import { ticketEditPath, ticketPath } from '@/paths'
 import { toCurrencyFromCent } from '@/utils/currency'
 import { TICKET_ICONS } from '../constants'
 import TicketMoreMenu from './ticket-more-menu'
-import { CommentWithMetadata } from '@/features/comment/types'
 
 
 type TicketItemProps = {

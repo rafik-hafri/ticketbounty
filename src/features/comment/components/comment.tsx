@@ -1,10 +1,10 @@
 import CardCompact from "@/components/card-compact"
 import { getAuth } from "@/features/auth/actions/get-auth"
 import { isOwner } from "@/features/auth/utils/is-owner"
+import { CommentWithMetadata } from '@/features/comment/types'
 import CommentCreateForm from "./comment-create-form"
 import CommentDeleteButton from "./comment-delete-button"
 import CommentItem from "./comment-item"
-import { CommentWithMetadata } from '@/features/comment/types'
 
 
 type CommentsProps = {
