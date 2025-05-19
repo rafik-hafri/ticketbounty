@@ -1,7 +1,9 @@
+"use client"
+import { useState } from "react"
 import CardCompact from "@/components/card-compact"
-import { getAuth } from "@/features/auth/actions/get-auth"
-import { isOwner } from "@/features/auth/utils/is-owner"
+import { Button } from "@/components/ui/button"
 import { CommentWithMetadata } from '@/features/comment/types'
+import { getComments } from "../queries/get-comments"
 import CommentCreateForm from "./comment-create-form"
 import CommentDeleteButton from "./comment-delete-button"
 import CommentItem from "./comment-item"
@@ -9,11 +11,23 @@ import CommentItem from "./comment-item"
 
 type CommentsProps = {
     ticketId: string, 
-    comments?: CommentWithMetadata[]
+    paginatedComments: {
+       list: CommentWithMetadata[]
+       metadata: {count: number, hasNextPage: boolean} 
+    }
 }
 
-async function Comments({ticketId, comments = []}: CommentsProps) {
-    const {user} = await getAuth()
+ function Comments({ticketId, paginatedComments}: CommentsProps) {
+    const [comments, setComments] = useState(paginatedComments.list)
+    const [metadata, setMetadata] = useState(paginatedComments.metadata)
+
+    const handleMore = async() => {
+
+     const morePaginatedComments = await getComments(ticketId, comments.length)
+     const moreComments = morePaginatedComments.list
+     setComments([...comments, ...moreComments])
+     setMetadata(morePaginatedComments.metadata)
+    }
   return (
     <>
     <CardCompact 
@@ -27,10 +41,13 @@ async function Comments({ticketId, comments = []}: CommentsProps) {
             key={comment.id} 
             comment={comment}
             buttons={[
-                ...(isOwner(user, comment) ? [<CommentDeleteButton key={0} id={comment.id}/>]:[])
+                ...(comment.isOwner ? [<CommentDeleteButton key={0} id={comment.id}/>]:[])
             ]}            
             />
         ))}
+    </div>
+    <div className="flex flex-col justify-center ml-8">
+        {metadata.hasNextPage && (<Button variant="ghost" onClick={handleMore}>More</Button>)}
     </div>
     </>
   )

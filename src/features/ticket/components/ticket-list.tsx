@@ -1,3 +1,4 @@
+import Placeholder from "@/components/placeholder"
 import { getTickets } from "../queries/get-tickets"
 import { ParsedSearchParams } from "../types"
 import TicketItem from "./ticket-item"
@@ -32,9 +33,11 @@ async function TicketList({userId, searchParams}: TicketListProps) {
            }
           />
         </div>
-            {tickets.map((ticket)=> (
+            {tickets.length ? (tickets.map((ticket)=> (
                 <TicketItem key={ticket.id} ticket={ticket}/>
-            ))}
+            ))) : (
+              <Placeholder label="No tickets found"/>
+            )}
         <div className="w-full max-w-[420px]">
             <TicketPagination paginatedTicketMetadata={ticketMetadata}/>
         </div>

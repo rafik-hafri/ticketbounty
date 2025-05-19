@@ -4,10 +4,6 @@ import { LucideMoreVertical, LucidePencil, LucideSquareArrowOutUpRight } from 'l
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { getAuth } from '@/features/auth/actions/get-auth'
-import { isOwner } from '@/features/auth/utils/is-owner'
-import Comments from '@/features/comment/components/comment'
-import { CommentWithMetadata } from '@/features/comment/types'
 import { ticketEditPath, ticketPath } from '@/paths'
 import { toCurrencyFromCent } from '@/utils/currency'
 import { TICKET_ICONS } from '../constants'
@@ -21,14 +17,12 @@ type TicketItemProps = {
             username:true
         }
     }}
-   }>
+   }> & {isOwner: boolean}
    isDetail?: boolean,
-   comments?: CommentWithMetadata[]
+   comments?: React.ReactNode
 }
-async function TicketItem({ticket, isDetail, comments}: TicketItemProps) {
-    const {user} = await getAuth()
-    const isTicketOwner = isOwner(user, ticket)
-    const editButton = isTicketOwner ? (
+function TicketItem({ticket, isDetail, comments}: TicketItemProps) {
+    const editButton = ticket.isOwner ? (
         <Button variant="outline" size="icon" asChild> 
             <Link prefetch href={ticketEditPath(ticket.id)}>
                 <LucidePencil className="h-4 w-4"/>
@@ -54,7 +48,7 @@ async function TicketItem({ticket, isDetail, comments}: TicketItemProps) {
     //         />
     // )
 
-    const moreMenu = isTicketOwner ? ( <TicketMoreMenu ticket={ticket} trigger={
+    const moreMenu = ticket.isOwner ? ( <TicketMoreMenu ticket={ticket} trigger={
             <Button variant="outline" size="icon">
             <LucideMoreVertical className="h-4 w-4"/>
             </Button>
@@ -98,10 +92,11 @@ async function TicketItem({ticket, isDetail, comments}: TicketItemProps) {
                 </>)}          
                 </div>
         </div>
-       {isDetail ?
+       {/* {isDetail ?
           <Comments ticketId={ticket.id} comments={comments}/>
          : null
-        }
+        } */}
+        {comments}
     </div>
              )
 }
