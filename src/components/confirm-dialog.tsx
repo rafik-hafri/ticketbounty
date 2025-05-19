@@ -12,8 +12,9 @@ type useConfirmDialogProps = {
     trigger: React.ReactElement<{ onClick?: () => void }>
     title?:string
     description?:string
+    onSuccess?:(actionState:ActionState) => void
 }
-export function useConfirmDialog({action, trigger, title= "Are you absolutely sure?", description= "This action cannot be undone. Make sure you inderstand the consequences."}: useConfirmDialogProps) {
+export function useConfirmDialog({action, trigger, title= "Are you absolutely sure?", description= "This action cannot be undone. Make sure you inderstand the consequences.",onSuccess}: useConfirmDialogProps) {
   const [isOpen, setIsOpen] = useState(false)
   const dialogTrigger = cloneElement(trigger, {
     onClick:() => setIsOpen(state => !state)
@@ -21,8 +22,8 @@ export function useConfirmDialog({action, trigger, title= "Are you absolutely su
 
   const [actionState, formAction] = useActionState(action, EMPTY_ACTION_STATE)
   const handleClosingDialog = () => {
-    console.log("deleteed")
     setIsOpen(false)
+    onSuccess?.(actionState)
   }
   const dialog = (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen} >
