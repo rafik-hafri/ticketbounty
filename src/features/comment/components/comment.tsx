@@ -28,6 +28,10 @@ type CommentsProps = {
      setComments([...comments, ...moreComments])
      setMetadata(morePaginatedComments.metadata)
     }
+
+    const handleDelteComment = (id: string) => {
+        setComments((prevComments) => prevComments.filter((comment) => comment.id !== id))
+    }
   return (
     <>
     <CardCompact 
@@ -41,7 +45,7 @@ type CommentsProps = {
             key={comment.id} 
             comment={comment}
             buttons={[
-                ...(comment.isOwner ? [<CommentDeleteButton key={0} id={comment.id}/>]:[])
+                ...(comment.isOwner ? [<CommentDeleteButton key={0} id={comment.id} onDeleteComment= {handleDelteComment}/>]:[])
             ]}            
             />
         ))}
