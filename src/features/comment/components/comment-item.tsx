@@ -13,17 +13,7 @@ function CommentItem({comment, buttons}: CommentItemProps) {
         <div className="flex justify-between">
             <p className="text-sm text-muted-foreground">{comment.user?.username ?? "Deleted User"}</p>
             <p className="text-sm text-muted-foreground">
-            {/* comment.createdAt.toLocaleString() */}
-
-             {/* 
-                Using format() from date-fns instead of toLocaleString()
-                to avoid hydration mismatch. toLocaleString() is locale-dependent
-                and can produce different output on the server vs. the client.
-                format() ensures consistent rendering across both environments.
-              */}
-            {format(comment.createdAt, "yyyy-MM-dd, HH:mm")}
-            
-            
+                {format(comment.createdAt, "yyyy-MM-dd, HH:mm")}            
             </p>
         </div>
        <p className="whitespace-pre-line"> {comment.content} </p> 

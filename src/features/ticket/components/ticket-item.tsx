@@ -55,12 +55,12 @@ function TicketItem({ticket, isDetail, comments}: TicketItemProps) {
     }/>) : null
 
   return (
-    <div className={clsx("w-full  flex gap-y-4", {
+    <div className={clsx("w-full flex flex-col gap-y-4", {
             "max-w-[420px]": !isDetail,
             "max-w-[580px]": isDetail
         })}>
-        <div className='flex gap-x-2'>
-                <Card  className='w-full max-w-[480px]'> 
+        <div className='flex flex-1 w-full gap-x-2'>
+                <Card  className='w-full max-w-[580px]'> 
                     <CardHeader>
                         <CardTitle className="flex gap-x-2">
                             <span>{TICKET_ICONS[ticket.status]}</span>

@@ -69,12 +69,13 @@ function Pagination({pagination, onPagination, paginatedMetadata: {count, hasNex
     <div className="flex justify-between items-center">
         <p className="text-sm text-muted-foreground">
             {label}
-            <div className="flex gap-x-2">
+        </p>
+        <div className="flex gap-x-2">
                 {sizeButton}
                 {previousButton}
                 {nextButton}
-            </div>
-        </p>
+        </div>
+        
     </div>
   )
 }

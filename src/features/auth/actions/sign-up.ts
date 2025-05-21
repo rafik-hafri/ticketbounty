@@ -1,12 +1,10 @@
 "use server"
 import { hash } from "@node-rs/argon2"
 import { Prisma } from "@prisma/client"
-import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { z } from "zod"
 import { setCookieByKey } from "@/actions/cookies"
 import { ActionState, fromErrorToActionState, toActionState } from "@/components/form/utils/to-action-state"
-import { lucia } from "@/lib/lucia"
 import { prisma } from "@/lib/prisma"
 import { signInPath } from "@/paths"
 
@@ -36,20 +34,20 @@ export const signUp = async(_actionState: ActionState, formData:FormData) => {
             Object.fromEntries(formData)
         )
         const passwordHash = await hash(password)
-        const user = await prisma.user.create({
+       await prisma.user.create({
             data:{
                 username, 
                 email,
                 passwordHash
             }
         })
-        const session = await lucia.createSession(user.id, {})
-        const sessionCookie = lucia.createSessionCookie(session.id)
-        ;(await cookies()).set(
-            sessionCookie.name,
-            sessionCookie.value,
-            sessionCookie.attributes
-        )
+        // const session = await lucia.createSession(user.id, {})
+        // const sessionCookie = lucia.createSessionCookie(session.id)
+        // ;(await cookies()).set(
+        //     sessionCookie.name,
+        //     sessionCookie.value,
+        //     sessionCookie.attributes
+        // )
 
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002"){
