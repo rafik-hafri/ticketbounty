@@ -14,6 +14,7 @@ type PaginationProps = {
     paginatedMetadata: PaginatedData<unknown>["metadata"]
 }
 function Pagination({pagination, onPagination, paginatedMetadata: {count, hasNextPage}}: PaginationProps) {
+    if(count < 1) return 
     const startOffset = pagination.page * pagination.size + 1
     const endOffset = startOffset - 1 + pagination.size
     const actualEndOffset = Math.min(endOffset, count)
@@ -55,11 +56,11 @@ function Pagination({pagination, onPagination, paginatedMetadata: {count, hasNex
                 <SelectValue/>
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="2">5</SelectItem>
-                <SelectItem value="2">10</SelectItem>
-                <SelectItem value="2">25</SelectItem>
-                <SelectItem value="2">50</SelectItem>
-                <SelectItem value="2">100</SelectItem>
+                <SelectItem value="5">5</SelectItem>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="25">25</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+                <SelectItem value="100">100</SelectItem>
             </SelectContent>
         </Select>
     )
