@@ -12,7 +12,7 @@ import CommentItem from "./comment-item"
 type CommentsProps = {
     ticketId: string, 
     paginatedComments: {
-       list: CommentWithMetadata[]
+       list: CommentWithMetadata[] 
        metadata: {count: number, hasNextPage: boolean} 
     }
 }
@@ -23,25 +23,35 @@ type CommentsProps = {
 
     const handleMore = async() => {
 
-     const morePaginatedComments = await getComments(ticketId, comments.length)
+     const morePaginatedComments = await getComments(ticketId, comments.length )
      const moreComments = morePaginatedComments.list
      setComments([...comments, ...moreComments])
      setMetadata(morePaginatedComments.metadata)
+    }
+
+    const handleDelteComment = (id: string) => {
+        console.log("deleted")
+        setComments((prevComments) => prevComments.filter((comment) => comment.id !== id))
+    }
+
+    const handleCreateComment = (comment: CommentWithMetadata | undefined)=> {
+        if(!comment) return
+        setComments((prevComments) => [comment, ...prevComments])
     }
   return (
     <>
     <CardCompact 
     title="Create Comment" 
     description="A new comment will be created"
-    content={<CommentCreateForm ticketId={ticketId}/>}
+    content={<CommentCreateForm ticketId={ticketId} onCreateComment={handleCreateComment}/>}
     />
     <div className="flex flex-col gap-y-2 ml-8">
         {comments.map((comment)=> (
             <CommentItem 
-            key={comment.id} 
+            key={comment.id}
             comment={comment}
             buttons={[
-                ...(comment.isOwner ? [<CommentDeleteButton key={0} id={comment.id}/>]:[])
+                ...(comment.isOwner ? [<CommentDeleteButton key="0" id={comment.id} onDeleteComment={handleDelteComment}/>]:[])
             ]}            
             />
         ))}

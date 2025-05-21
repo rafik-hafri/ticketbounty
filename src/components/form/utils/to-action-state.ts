@@ -1,7 +1,7 @@
 import { ZodError } from "zod"
 
-export type ActionState = {status?:"SUCCESS" | "ERROR",message: string, payload?:FormData, fieldErrors: Record<string, string[] | undefined>,timestamp: number}
-export const EMPTY_ACTION_STATE: ActionState = {
+export type ActionState<T = unknown> = {status?:"SUCCESS" | "ERROR",message: string, payload?:FormData, fieldErrors: Record<string, string[] | undefined>,timestamp: number, data?:T}
+export const EMPTY_ACTION_STATE: ActionState= {
     message: "",
     fieldErrors:{},
     timestamp: Date.now()
@@ -37,6 +37,6 @@ export const fromErrorToActionState = (error: unknown, formData?:FormData) :Acti
     }}
 
 }
-export const toActionState = (status: ActionState["status"],message:string, formData?:FormData): ActionState => {
-    return {status,message, fieldErrors:{},payload:formData ,timestamp: Date.now()}
+export const toActionState = (status: ActionState["status"],message:string, formData?:FormData, data?: unknown)=> {
+    return {status,message, fieldErrors:{},payload:formData ,timestamp: Date.now(), data}
 }

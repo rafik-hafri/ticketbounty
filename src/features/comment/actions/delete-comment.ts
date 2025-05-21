@@ -7,7 +7,7 @@ import { prisma } from "@/lib/prisma"
 import { ticketPath } from "@/paths"
 
 
-export const deleteComment = async (id: string)=> {
+export const deleteComment = async ( id: string)=> {
     const {user}  = await getAuthOrRedirect()
     const comment = await prisma.comment.findUnique({
         where: {id}

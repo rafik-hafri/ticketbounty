@@ -7,8 +7,8 @@ type FormProps = {
   action: (payload: FormData) => void,
   children: React.ReactNode,
   actionState: ActionState,
-  onSuccess?:() => void,
-  onError?:() => void,
+  onSuccess?:(actionState: ActionState) => void,
+  onError?:(actionState: ActionState) => void,
 
 
 }
@@ -18,18 +18,14 @@ function Form({action, children, actionState, onSuccess, onError}:FormProps ) {
         if(actionState.message){
             toast.success(actionState.message)
         }
-        if(onSuccess) {
-          onSuccess()
-        }
+       onSuccess?.(actionState);
     },
     onError: ({actionState})=>{
         if(actionState.message){
             toast.error(actionState.message)
 
         }
-        if(onError) {
-          onError()
-        }
+        onError?.(actionState);
     }
 })
   return (
