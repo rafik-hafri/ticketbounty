@@ -1,4 +1,5 @@
 
+import { Prisma } from "@prisma/client"
 import {createSearchParamsCache, parseAsInteger, parseAsString} from "nuqs/server"
 
 export type TicketStatus = "OPEN" | "DONE"| "IN_PROGRESS"
@@ -9,6 +10,14 @@ export type Ticket = {
     status: TicketStatus
 
 }
+
+export type TicketWithMetadata =  Prisma.TicketGetPayload<{
+    include: {user: {
+        select:{
+            username:true
+        }
+    }}
+   }> & {isOwner: boolean}
 
 export const searchParser = parseAsString.withDefault("").withOptions({
     shallow: false,
