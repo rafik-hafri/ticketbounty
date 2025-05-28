@@ -8,6 +8,8 @@ import { getComments } from "../queries/get-comments"
 import CommentCreateForm from "./comment-create-form"
 import CommentDeleteButton from "./comment-delete-button"
 import CommentItem from "./comment-item"
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query"
+import { metadata } from "@/app/layout"
 
 
 type CommentsProps = {
@@ -16,25 +18,51 @@ type CommentsProps = {
 }
 
  function Comments({ticketId, paginatedComments}: CommentsProps) {
-    const [comments, setComments] = useState(paginatedComments.list)
-    const [metadata, setMetadata] = useState(paginatedComments.metadata)
+    // const [comments, setComments] = useState(paginatedComments.list)
+    // const [metadata, setMetadata] = useState(paginatedComments.metadata)
+    const queryKey = ["comments", ticketId]
+    const {data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch} = useInfiniteQuery({
+        queryKey,
+        queryFn: ({pageParam}) => getComments(ticketId, pageParam),
+        initialPageParam: undefined as (string | undefined),
+        getNextPageParam: (lastPage) => lastPage.metadata.hasNextPage ? lastPage.metadata.cursor : undefined,
+        initialData: {
+            pages: [
+                {
+                    list: paginatedComments.list,
+                    metadata: paginatedComments.metadata
+                }
+            ],
+            pageParams: [undefined]
+        }
 
-    const handleMore = async() => {
+    })
+    const comments = data.pages.map(page => page.list).flat() 
+    const queryClient = useQueryClient()
 
-     const morePaginatedComments = await getComments(ticketId, metadata.cursor )
-     const moreComments = morePaginatedComments.list
-     setComments([...comments, ...moreComments])
-     setMetadata(morePaginatedComments.metadata)
+    const handleMore = () => {
+
+    //  const morePaginatedComments = await getComments(ticketId, metadata.cursor )
+    //  const moreComments = morePaginatedComments.list
+    //  setComments([...comments, ...moreComments])
+    //  setMetadata(morePaginatedComments.metadata)
+    fetchNextPage()
+
     }
 
     const handleDelteComment = (id: string) => {
-        console.log("deleted")
-        setComments((prevComments) => prevComments.filter((comment) => comment.id !== id))
+        // console.log("deleted")
+        // setComments((prevComments) => prevComments.filter((comment) => comment.id !== id))
+        // refetch()
+        queryClient.invalidateQueries({queryKey})
     }
 
     const handleCreateComment = (comment: CommentWithMetadata | undefined)=> {
-        if(!comment) return
-        setComments((prevComments) => [comment, ...prevComments])
+        // if(!comment) return
+        // setComments((prevComments) => [comment, ...prevComments])
+        // refetch()
+        queryClient.invalidateQueries({queryKey})
+
     }
   return (
     <>
@@ -55,7 +83,9 @@ type CommentsProps = {
         ))}
     </div>
     <div className="flex flex-col justify-center ml-8">
-        {metadata.hasNextPage && (<Button variant="ghost" onClick={handleMore}>More</Button>)}
+        {/* {metadata.hasNextPage && (<Button variant="ghost" onClick={handleMore}>More</Button>)} */}
+        {hasNextPage && (<Button variant="ghost" onClick={handleMore} disabled={isFetchingNextPage}>More</Button>)}
+
     </div>
     </>
   )

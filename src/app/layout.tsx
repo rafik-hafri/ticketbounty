@@ -7,6 +7,7 @@ import Header from "@/app/_navigation/header";
 import Sidebar from "@/app/_navigation/sidebar/components/sidebar";
 import RedirectToast from "@/components/redirect-toast";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { ReactQueryProvider } from "./_providers/react-query/react-query-provider";
 
 
 
@@ -37,6 +38,7 @@ export default function RootLayout({
       >
      
         <ThemeProvider>
+          <ReactQueryProvider>
           <Header/>
           <div className="flex h-screen overflow-hidden border-collapse">
              <Sidebar/>
@@ -56,6 +58,7 @@ export default function RootLayout({
           </div>
          
             <Toaster expand/>
+            </ReactQueryProvider>
           </ThemeProvider>
        
       </body>
