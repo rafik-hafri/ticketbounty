@@ -9,13 +9,23 @@ datasource db {
 }
 
 model User {
-  id           String    @id @default(cuid())
-  username     String    @unique
-  email        String    @unique
-  passwordHash String
-  sessions     Session[]
-  tickets      Ticket[]
-  comments     Comment[]
+  id                  String                @id @default(cuid())
+  username            String                @unique
+  email               String                @unique
+  passwordHash        String
+  comments            Comment[]
+  passwordResetTokens PasswordResetTokens[]
+  sessions            Session[]
+  tickets             Ticket[]
+}
+
+model PasswordResetTokens {
+  tokenHash String   @id
+  expiresAt DateTime
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model Session {
@@ -37,8 +47,8 @@ model Ticket {
   bounty    Int
   deadline  String
   userId    String
-  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   comments  Comment[]
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -48,9 +58,9 @@ model Comment {
   createdAt DateTime @default(now())
   content   String   @db.VarChar(1024)
   ticketId  String
-  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
   userId    String?
-  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  user      User?    @relation(fields: [userId], references: [id])
 
   @@index([ticketId])
   @@index([userId])

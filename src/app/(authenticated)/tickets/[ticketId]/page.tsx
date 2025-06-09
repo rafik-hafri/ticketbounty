@@ -9,7 +9,7 @@ import { homePath } from "@/paths"
 
  type TicketPageProps = {
     params : Promise<{
-ticketId: string
+    ticketId: string
 }>
 }
 async function TicketPage({params}: TicketPageProps) {

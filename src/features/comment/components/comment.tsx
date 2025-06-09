@@ -51,7 +51,7 @@ type CommentsProps = {
     // fetchNextPage()
 
     // }
-    //  const handleDelteComment = (_id: string) => {
+    //  const handleDelteComment = (id: string) => {
     //     // console.log("deleted")
     //     // setComments((prevComments) => prevComments.filter((comment) => comment.id !== id))
     //     // refetch()
