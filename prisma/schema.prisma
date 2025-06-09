@@ -9,17 +9,17 @@ datasource db {
 }
 
 model User {
-  id                  String                @id @default(cuid())
-  username            String                @unique
-  email               String                @unique
+  id                  String               @id @default(cuid())
+  username            String               @unique
+  email               String               @unique
   passwordHash        String
   comments            Comment[]
-  passwordResetTokens PasswordResetTokens[]
+  passwordResetTokens PasswordResetToken[]
   sessions            Session[]
   tickets             Ticket[]
 }
 
-model PasswordResetTokens {
+model PasswordResetToken {
   tokenHash String   @id
   expiresAt DateTime
   userId    String

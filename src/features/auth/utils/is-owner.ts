@@ -1,10 +1,10 @@
-import {User as AuthUser} from "lucia"
+import { User } from '@prisma/client'
 
 type Entity = {
     userId: string | null
 }
 
-export const isOwner = (authUser:AuthUser | undefined | null, entity:Entity | undefined | null) =>{
+export const isOwner = (authUser:User | undefined | null, entity:Entity | undefined | null) =>{
     if(!authUser || !entity ) {
         return false
     }

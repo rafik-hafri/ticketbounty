@@ -44,7 +44,8 @@ jobs:
           port: 2222
           script: |
             export DATABASE_URL=${{ secrets.DATABASE_URL }}
-            export DIRECT_URL=$DATABASE_URL
+            export RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
+            export DIRECT_URL=${{ secrets.DATABASE_URL }}
 
             cd /home/rafik/ticketbounty
             git pull origin main 
