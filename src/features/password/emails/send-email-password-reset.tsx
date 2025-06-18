@@ -1,9 +1,8 @@
-import React from 'react'
 import EmailPasswordReset from '@/emails/password/email-password-reset'
-import { resend } from '@/lib/resend'
+import { getResendClient } from '@/lib/resend';
 
 async function sendEmailPasswordReset(userName: string, email:string, passwordResetLink: string) {
-
+  const resend = getResendClient();
   return await resend.emails.send({
     from:"auth@rafikhafri.dev",
     to:email,
