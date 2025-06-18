@@ -6,13 +6,13 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV
       - DATABASE_URL
       - DIRECT_URL
       - RESEND_API_KEY
-      - INNGEST_EVENT_KEY=${INNGEST_EVENT_KEY}
-      - INNGEST_SIGNING_KEY=${INNGEST_SIGNING_KEY}
-      - INNGEST_DEV=false
+      - INNGEST_EVENT_KEY
+      - INNGEST_SIGNING_KEY
+      - INNGEST_DEV
     command: ["npm", "run", "start"]
     networks:
       - shared-postgres-network

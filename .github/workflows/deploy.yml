@@ -43,6 +43,10 @@ jobs:
           key: ${{ secrets.VPS_PRIVATE_KEY }}
           port: 2222
           script: |
+            export NODE_ENV=production
+            export INNGEST_EVENT_KEY=${{ secrets.INNGEST_EVENT_KEY}}
+            export INNGEST_SIGNING_KEY=${{ secrets.INNGEST_SIGNING_KEY}}
+            export INNGEST_DEV=false
             export DATABASE_URL=${{ secrets.DATABASE_URL }}
             export RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
             export DIRECT_URL=${{ secrets.DATABASE_URL }}
