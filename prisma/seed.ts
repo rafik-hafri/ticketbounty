@@ -5,11 +5,13 @@ import { PrismaClient } from "@prisma/client"
  const users = [
   {
   username:"admin",
-  email:"rafikhafri1@gmail.com"
+  email:"rafikhafri1@gmail.com",
+  emailVerified: true
   },
   {
     username:"user",
-    email:"user@gmail.com"
+    email:"user@gmail.com",
+    emailVerified:false
   }
  ]
  const  tickets= [
@@ -20,7 +22,7 @@ import { PrismaClient } from "@prisma/client"
         status:'DONE' as const,
         deadline: "2025-05-01",
         bounty: 100
-
+ 
     },
     {
         
