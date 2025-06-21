@@ -1,6 +1,6 @@
 import CardCompact from "@/components/card-compact"
 import EmailVerificationForm from "@/features/auth/components/email-verification-form"
-import EmailVerificationResendForm from "@/features/auth/components/email-verification-resend--form"
+import EmailVerificationResendForm from "@/features/auth/components/email-verification-resend-form"
 
 function EmailVerificationPage() {
    
